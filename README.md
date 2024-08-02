@@ -1175,3 +1175,305 @@ int main() {
 }
 ```
 ## 静态属性
+```C++
+#include <iostream>
+
+class Person {
+public:
+	// 类内定义类外赋值
+	static int age;
+	const static double PI;
+private:
+
+};
+int Person::age = 10;
+const double Person::PI = 3.14;
+
+int main() {
+	// 创建对徐
+	Person p1;
+
+	return 0;
+}
+```
+## 构造函数
+```C++
+#include <iostream>
+
+using namespace std;
+
+class Person {
+private:
+	int age;
+	string name;
+public:
+	Person() {
+		cout << "无参构造函数执行" << endl;
+	}
+	Person(int age) {
+		this->age = age;
+		cout << "有参构造函数执行" << endl;
+	}
+	Person(int age, string name) {
+		this->age = age;
+		this->name = name;
+		cout << "有参构造函数执行" << endl;
+	}
+
+};
+
+int main() {
+	// 常规调用
+	Person p1 = Person();
+	Person p2 = Person(10);
+	Person p3 = Person(10, "张三");
+	Person* p4 = new Person(10, "李四");
+	// 隐式调用
+	Person p5;
+	Person p6 = { 10,"王五" };
+
+	// 释放堆内存
+	delete p4;
+	return 0;
+}
+```
+## explicit 关键字
+```c++
+// 表示无法通过隐式调用来创建对象
+class Person {
+private:
+	int age;
+	string name;
+public:
+	explicit Person() {
+		cout << "无参构造函数执行" << endl;
+	}
+	Person(int age) {
+		this->age = age;
+		cout << "有参构造函数执行" << endl;
+	}
+	Person(int age, string name) {
+		this->age = age;
+		this->name = name;
+		cout << "有参构造函数执行" << endl;
+	}
+
+};
+```
+## 构造函数初始化列表
+```c++
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	int age;
+	string name;
+public:
+	explicit Person() {
+		cout << "无参构造函数执行" << endl;
+	}
+	explicit Person(int age, string name) : age(age), name(name) {
+		cout << "有参构造函数执行" << endl;
+	}
+
+};
+
+int main() {
+	Person p3 = Person(10, "张三");
+	cout << p3.age << p3.name << endl;
+	return 0;
+}
+```
+
+## 拷贝构造函数
+```C++
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	int age;
+	string name;
+public:
+	explicit Person() {}
+	Person(int age, string name) : age(age), name(name) {
+		cout << "有参构造函数执行" << endl;
+	}
+	// 拷贝构造函数
+	Person(const Person& p) {
+		this->age = p.age;
+		this->name = p.name;
+		cout << "拷贝构造函数" << endl;
+	}
+
+};
+
+int main() {
+	Person p3 = Person(10, "张三");
+	Person p1 = p3;
+	cout << &p3.name << endl;
+	cout << &p1.name << endl;
+	return 0;
+}
+```
+
+## 析构函数
+```C++
+// 对象销毁
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	int age;
+	string name;
+public:
+	explicit Person() {}
+	Person(int age, string name) : age(age), name(name) {
+		cout << "有参构造函数执行" << endl;
+	}
+	// 拷贝构造函数
+	Person(const Person& p) {
+		this->age = p.age;
+		this->name = p.name;
+		cout << "拷贝构造函数" << endl;
+	}
+	// 析构函数，如果是new的对象需要使用delete才会调用析构函数
+	~Person() {
+		cout << "对象析构了" << endl;
+	}
+
+};
+
+int main() {
+	Person p3 = Person(10, "张三");
+	Person p1 = p3;
+	cout << &p3.name << endl;
+	cout << &p1.name << endl;
+	return 0;
+}
+```
+
+## 常函数
+```C++
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	int age;
+	string name;
+public:
+	explicit Person() {}
+	Person(int age, string name) : age(age), name(name) {
+		cout << "有参构造函数执行" << endl;
+	}
+	// 拷贝构造函数
+	Person(const Person& p) {
+		this->age = p.age;
+		this->name = p.name;
+		cout << "拷贝构造函数" << endl;
+	}
+	// 析构函数，如果是new的对象需要使用delete才会调用析构函数
+	~Person() {
+		cout << this << endl;
+		cout << "对象析构了" << endl;
+	}
+	// 常函数
+public:
+	 void printAge() const {
+		 // 常函数中不允许修改值，只允许调用常函数
+		 //this->age = 20;
+		cout << this->age << endl;
+	}
+
+};
+
+int main() {
+	Person p3 = Person(10, "张三");
+	p3.printAge();
+	return 0;
+}
+
+```
+
+## 常对象
+```c++
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	int age;
+	string name;
+public:
+	explicit Person() {}
+	Person(int age, string name) : age(age), name(name) {
+		cout << "有参构造函数执行" << endl;
+	}
+	// 拷贝构造函数
+	Person(const Person& p) {
+		this->age = p.age;
+		this->name = p.name;
+		cout << "拷贝构造函数" << endl;
+	}
+	// 析构函数，如果是new的对象需要使用delete才会调用析构函数
+	~Person() {
+		cout << this << endl;
+		cout << "对象析构了" << endl;
+	}
+
+};
+
+int main() {
+	// 对象的属性不允许修改,只能调用常函数
+	const	 Person p3 = Person(10, "张三");
+	//p3.age = 20;
+	return 0;
+}
+
+```
+
+## mutable 可变修饰属性，修饰的属性可以在常函数和常对象中修改
+```c++
+#include <iostream>
+
+using namespace std;
+
+class Person {
+public:
+	mutable int age;
+	string name;
+public:
+	explicit Person() {}
+	Person(int age, string name) : age(age), name(name) {
+		cout << "有参构造函数执行" << endl;
+	}
+	// 拷贝构造函数
+	Person(const Person& p) {
+		this->age = p.age;
+		this->name = p.name;
+		cout << "拷贝构造函数" << endl;
+	}
+	// 析构函数，如果是new的对象需要使用delete才会调用析构函数
+	~Person() {
+		cout << this << endl;
+		cout << "对象析构了" << endl;
+	}
+
+};
+
+int main() {
+	// 对象的属性不允许修改,只能调用常函数
+	const	 Person p3 = Person(10, "张三");
+	p3.age = 20;
+	return 0;
+}
+
+```
