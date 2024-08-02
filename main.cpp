@@ -1,25 +1,58 @@
 #include <iostream>
 
+/*
+	人类的定义
+		访问权限：
+			private：只在当前类中可访问
+			protected：当前类和子类可访问
+			public：任何位置访问
+*/
+class Person {
+public:
+	// 构造函数
+	Person();
+	// 析构函数
+	~Person();
+	// 属性
+	int age;
+	std::string name;
+	// 方法
+	int getAge() {
+		return this->age;
+	}
+
+private:
+
+};
+
+Person::Person()
+{
+}
+
+Person::~Person()
+{
+}
+
+
+
 int main() {
-	// 定义数组1,可能存在脏数据
-	int arr1[10];
-	for (int i = 0; i < 10; i++) {
-		std::cout << arr1[i] << std::endl;
-	}
-	// 定义数组2
-	int arr2[10] = { 0 };
-	for (int i = 0; i < 10; i++) {
-		std::cout << arr2[i] << std::endl;
-	}
-	// 定义数组3
-	int arr3[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-	for (int i = 0; i < 10; i++) {
-		std::cout << arr3[i] << std::endl;
-	}
-	// 定义数组4
-	int arr4[] = { 1,2,3,4,5 };
-	for (int i = 0; i < 5; i++) {
-		std::cout << arr4[i] << std::endl;
-	}
+	// 创建对徐
+	Person p1;
+	p1.age = 10;
+	p1.name = "张三";
+
+	Person p2 = {};
+	p2.age = 10;
+	p2.name = "张三";
+
+	Person p3 = Person();
+	p3.age = 10;
+	p3.name = "张三";
+
+	Person* p4 = new Person();
+	p4->age = 10;
+	p4->name = "张三";
+
+	delete p4;
 	return 0;
 }

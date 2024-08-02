@@ -1018,3 +1018,104 @@ int main() {
 	return 0;
 }
 ```
+## 数组遍历
+```C++
+#include <iostream>
+
+int main() {
+	// 定义数组4
+	int arr4[] = { 1,2,3,4,5 };
+	// 下标遍历
+	for (int i = 0; i < 5; i++) {
+		std::cout << arr4[i] << std::endl;
+	}
+	// 增强for遍历，只有在定义元素的代码块中可用
+	for (int i : arr4) {
+		std::cout << i << std::endl;
+	}
+	return 0;
+}
+```
+## 选择排序
+```C++
+#include <iostream>
+
+/*
+	选择排序
+		第一个和每个一个比较，然后交换位
+*/
+void selectSort(int arr[], int len) {
+	for (int i = 0; i < len; i++) {
+		// 记录最小下标
+		int minIndex = i;
+		int min = arr[i];
+		for (int j = i + 1; j < len; j++) {
+			// 判断比较
+			if (min > arr[j]) {
+				minIndex = j;
+				min = arr[j];
+			}
+		}
+		// 交换位置
+		int temp = arr[i];
+		arr[i] = arr[minIndex];
+		arr[minIndex] = temp;
+	}
+}
+
+
+int main() {
+	// 定义数组4
+	int arr4[] = { 10,6,4,5,14,435,74,34 };
+	int len = sizeof(arr4) / sizeof(arr4[0]);
+	selectSort(arr4, len);
+	// 遍历查看
+	for (size_t i = 0; i < len; i++) {
+		std::cout << arr4[i] << ",";
+	}
+	std::cout << std::endl;
+	return 0;
+}
+```
+## 冒泡排序
+```C++
+#include <iostream>
+
+/*
+	冒泡排序，相连两个下标比较
+*/
+void bubbleSort(int arr[], int len) {
+	for (int i = 0; i < len; i++) {
+		// 遍历数据	
+		for (int j = 0; j < len - 1 - i; j++) { 
+			if (arr[j] > arr[j + 1]) {
+				// 交换元素
+				int temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+
+
+int main() {
+	// 定义数组4
+	int arr4[] = { 10,6,4,5,14,435,74,34 };
+	int len = sizeof(arr4) / sizeof(arr4[0]);
+	bubbleSort(arr4, len);
+	// 遍历查看
+	for (size_t i = 0; i < len; i++) {
+		std::cout << arr4[i] << ",";
+	}
+	std::cout << std::endl;
+	return 0;
+}
+```
+
+# 面向对象
+## 类
+```C++
+// 类是定义，对象是类的实现
+
+```
