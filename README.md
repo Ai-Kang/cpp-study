@@ -795,3 +795,198 @@ int main() {
     return 0;
 }
 ```
+# 宏定义
+```C++
+#include <iostream>
+
+// 定义宏,走的是替换
+#define NAME "张三"
+int main() {
+	std::cout << NAME << std::endl;
+
+}
+```
+
+# 命名空间
+## 定义命名空间
+```C++
+#include <iostream>
+
+// 定义命名空间
+namespace a {
+	int num = 10;
+	namespace aa {
+		int num = 20;
+	}
+}
+
+int main() {
+	std::cout << a::num << std::endl;
+	std::cout << a::aa::num << std::endl;
+
+}
+```
+## using关键字
+```C++
+#include <iostream>
+
+// 定义命名空间
+namespace a {
+	int num = 10;
+	namespace aa {
+		int num = 20;
+	}
+}
+
+int main() {
+	using a::num;
+	using namespace a;
+	std::cout << num << std::endl;
+	std::cout << aa::num << std::endl;
+
+}
+```
+# 分支语句
+```C++
+if(条件){
+   // 条件成立执行
+} else if(条件){
+  // 条件成立执行
+} else{
+  // 条件不成立执行
+}
+
+switch(变量){
+    case 值1:
+      // 值1成立执行
+      break;
+    case 值2:
+      // 值2成立执行
+      break;
+    default:
+      // 默认执行
+      break;
+}
+```
+# 循环
+```C++
+while(条件){
+    // 条件成立执行
+    continue; // 跳过本次循环
+    break; // 跳出循环
+} 
+
+// 执行在前条件在后
+do {
+    // 条件成立执行
+} while(条件);
+
+for(int i = 0; i < 10; i++){
+    // 执行
+}
+```
+
+# 函数
+## 定义函数
+```C++
+返回类型  函数名(参数列表){
+    // 执行
+    return 返回值;
+}
+
+int add(int a, int b){
+    return a + b;
+}
+```
+## 函数默认值
+```C++
+int add(int a = 0, int b = 0){
+    return a + b;
+}
+```
+## 函数重载
+```C++
+int add(int a, int b){
+    return a + b;
+}
+
+double add(int a, double b){
+    return a + b;
+}
+
+int add(int a, int b, int c){
+    return a + b + c;
+}
+```
+## 函数递归
+```C++
+int getSum(int n){
+    if(n == 1){
+        return 1;
+    }
+    if(n <= 0){
+        return 0;
+    }
+    return n + getSum(n - 1);
+}
+```
+# 指针与引用
+## 内存分析
+```C++
+栈区：存放局部变量，函数压栈
+堆区：存放动态内存，new、delete，手动申请和释放
+全局区：存放全局变量
+代码区：存放程序编译后的二进制代码
+```
+## 指针
+### 常量指针与指针常量
+```C++
+#include <iostream>
+
+int main() {
+	int a = 10;
+	int b = 20;
+	// const修饰在前时可以改变指针指向的地址
+	const int* ap = &a;
+	//*ap = 100;
+	ap = &b;
+	// consnt修饰在后时可以改变指针指向的值
+	int* const aap = &a;
+	//aap = &b;
+	*aap = 100;
+	return 0;
+}
+```
+### 指针在函数中的传参
+```C++
+#include <iostream>
+
+void add(int* a, int b) {
+	*a = *a + b;
+}
+
+int main() {
+	int a = 10;
+	int b = 20;
+	add(&a, b);
+	std::cout << "a + b = " << a << std::endl;
+	return 0;
+}
+```
+## 引用
+```C++
+#include <iostream>
+
+void add(int& a, int b) {
+	a = a + b;
+}
+
+int main() {
+	int a = 10;
+	int b = 20;
+	add(a, b);
+	std::cout << "a + b = " << a << std::endl;
+	return 0;
+}
+```
+# 数组
