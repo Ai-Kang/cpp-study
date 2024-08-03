@@ -1936,3 +1936,386 @@ int main() {
 	return 0;
 }
 ```
+
+# STL标准模板库
+## 容器
+## string
+```C++
+/**
+ * string容器
+ */
+void Day05::stetString() {
+    // 构造方法
+    std::string s1 = std::string();
+    std::string s2 = std::string("abc");
+    char *c3 = "abc";
+    std::string s3 = std::string(c3);
+    std::string s4 = std::string(5, 'a');
+    // 赋值
+    std::string s5 = "abcd";
+    std::string s6;
+    s6.assign("anc");
+    s6.assign("anc", 2);
+    s6.assign("anc", 1, 2);
+    s6.assign('A', 2);
+    // 获取
+    std::cout << s5[0] << std::endl;
+    std::cout << s5.at(1) << std::endl;
+    // C++字符串转c字符数组
+    const char *string = s5.c_str();
+    // 拼接
+    std::string s7 = s5 + s4;
+    s7 += s6;
+    s7.append(2, 'A');
+    s7.append(s5);
+    s7.append(s2);
+    s7.append(s2, 1);
+    s7.append(s2, 1, 3);
+    std::cout << s7 << std::endl;
+    // 查找
+    s7.find("abc", 0);// 从0位开始找
+    s7.find("abc", 5, 2);// 查找字符串的前2位查找
+    s7.rfind("abc");// 最后一次出现，参数和正向查找一致使用
+    // 替换
+    s7.replace(0, 20, "abc"); // 0位开始的后20位替换为abc
+    // 比较字符串
+    std::string s8 = "abcd";
+    std::string s9 = "abc";
+    std::cout << (s8 > s9) << std::endl;
+    std::cout << (s8 < s9) << std::endl;
+    std::cout << (s8 == s9) << std::endl;
+    // 1:前大后小 -1前小后大 0相等
+    std::cout << s8.compare(s9) << std::endl;
+    // 字串获取
+    std::string s10 = s8.substr(0, 2);
+    // 插入
+    s10.insert(2,"abc");
+    s10.insert(2,5,'A');// 插入5个A
+    // 删除
+    s10.erase(2,5);// 从2下标开始删除5个字符
+}
+```
+### vector
+```C++
+/**
+ * vector容器
+ */
+void Day05::stetVector() {
+    // 构造函数
+    std::vector<int> v1;
+    std::vector<int> v3 = std::vector(10, 5); // 10个5
+    // 添加元素
+    v1.push_back(10);
+    v1.push_back(20);
+    v1.push_back(30);
+    v1.push_back(30);
+    // 拷贝
+    std::vector<int> v4 = std::vector(v1);
+    std::vector<int> v2 = std::vector(v1.begin(), v1.end());
+    // 迭代器遍历
+    std::vector<int>::iterator v2Iterator = v2.begin();
+    for (std::vector<int>::iterator v2Iterator = v2.begin(); v2Iterator != v2.end(); v2Iterator++) {
+        // 修改数据
+        if (*v2Iterator == 30) {
+            *v2Iterator = 100;
+        }
+    }
+    for (std::vector<int>::iterator v2Iterator = v2.begin(); v2Iterator != v2.end(); v2Iterator++) {
+        std::cout << *v2Iterator << std::endl;
+    }
+    // 增强for循环遍历(不可修改)
+    for (int item: v2) {
+        std::cout << item << std::endl;
+    }
+    // 增强for循环遍历(可修改)
+    for (int &item: v2) {
+        if (item == 100) {
+            item = 30;
+        }
+        std::cout << item << std::endl;
+    }
+    // 增强for循环遍历(可修改)
+    for (int &item: v2) {
+        std::cout << item << std::endl;
+    }
+
+    // 赋值
+    int arr[] = {1, 2, 3, 4, 5};
+    v1.assign(arr, arr + 5);
+    v1.assign(v2.begin(), v2.end());
+    v1.assign(10, 5); //  10个5
+    v3 = v1;
+    // 交换赋值
+    v1.swap(v2);
+    // 大小
+    unsigned long long int v1Size = v1.size();
+    // 容量
+    unsigned long long int v1Capacity = v1.capacity();
+    // 是否为空
+    bool isEmpty = v1.empty();
+    // 重新指定容器长度
+    v1.resize(5);
+    // 获取
+    int &at1 = v1.at(0);
+    int &at2 = v1[1];
+    // 返回首元素
+    int &fronti = v1.front();
+    // 返回末尾元素
+    int &backi = v1.back();
+    // 指定指针位置插入10个5
+    v1.insert(v1.begin() + 3, 10, 5);
+    // 末尾插入
+    v1.push_back(10);
+    // 删除末尾元素
+    v1.pop_back();
+    // 区间删除
+    v1.erase(v1.begin() + 5);
+    v1.erase(v1.begin() + 5, v1.begin() + 6);
+    // 清空元素
+    v1.clear();
+}
+```
+### list
+```C++
+/**
+ * list 双向链表链表
+ */
+void Day05::stetList() {
+    // 构造函数
+    std::list<int> l1;
+    std::list<int> l2 = std::list(l1);
+    std::list<int> l3 = std::list(l1.begin(), l1.end());
+    std::list<int> l4 = std::list(10, 5); // 10个5
+    // 尾部加入元素
+    l1.push_back(10);
+    l1.push_back(20);
+    // 头部加入元素
+    l1.push_front(30);
+    //位置添加
+    l1.insert(++l1.begin(), 20);
+    // 插入20个3
+    l1.insert(++l1.begin(), 20, 3);
+    // 指定位置删除
+    l1.erase(l1.begin());
+    // 指定区间删除
+    l1.erase(l1.begin(), ++l1.begin());
+    // 大小
+    unsigned long long int i = l1.size();
+    bool b = l1.empty();
+    // 重置大小
+    l1.resize(100);
+    // 获取首元素
+    int &front = l1.front();
+    // 获取末尾元素
+    int &back = l1.back();
+    // 反转
+    l1.reverse();
+    // 排序
+    l1.sort();
+    // 删除最后一个元素
+    l1.pop_back();
+    // 删除第一个元素
+    l1.pop_front();
+    // 移除指定值8
+    l1.remove(8);
+    // 清空
+    l1.clear();
+}
+```
+### deque
+```C++
+/**
+ * deque
+ *  双向链表
+ */
+void Day05::stetDeque() {
+    // 构造函数
+    std::deque<int> d1;
+    int arr[] = {1, 2, 3, 4, 5};
+    std::deque<int> d2 = std::deque(arr, arr + 5);
+    std::deque<int> d3 = std::deque(d2.begin(), d2.end());
+    std::deque<int> d4 = std::deque(5, 3); // 5个3
+    // 迭代器
+    std::deque<int>::iterator d3Iterator = d3.begin();
+    for (int &item: d3) {
+        std::cout << item << std::endl;
+    }
+    // 赋值
+    d4.assign(d3.begin(), d3.end());
+    d4.swap(d3);
+    // 大小
+    unsigned long long int size = d4.size();
+    // 是否空
+    bool isEmpty = d4.empty();
+    // 重置大小
+    d4.resize(10);
+    // 末尾增加
+    d4.push_back(10);
+    // 首添加
+    d4.push_front(100);
+    // 尾部删除
+    d4.pop_back();
+    // 首删除
+    d4.pop_front();
+    // 获取元素
+    int &i = d4.at(2);
+    int &i1 = d4[2];
+    // 清空
+    d4.clear();
+}
+```
+### stack
+```C++
+/**
+ * 栈结构
+ */
+void Day05::stetStack() {
+    // 构造函数
+    std::stack<int> s1;
+    // 压栈
+    s1.push(10);
+    s1.push(20);
+    s1.push(30);
+    // 弹出
+    s1.pop();
+    std::stack<int> s2 = std::stack(s1);
+    // 获取栈顶元素
+    int &i = s1.top();
+    // 大小
+    unsigned long long int size = s1.size();
+    // 是否空
+    bool b = s1.empty();
+}
+```
+### queue
+```C++
+/**
+ * queue 队列结构
+ */
+void Day05::stetQueue() {
+    // 构造函数
+    std::queue<int> q1;
+
+    std::queue<int> q2 = std::queue(q1);
+    // 添加数据
+    q1.push(10);
+    q1.push(20);
+    // 获取队头元素
+    int &front = q1.front();
+    // 获取队尾元素
+    int &back = q1.back();
+    // 从队头移除元素
+    q1.pop();
+    // 获取大小
+    unsigned long long int i = q1.size();
+    // 是否空
+    bool b = q1.empty();
+}
+```
+### set
+```C++
+/**
+ * set/multiset
+ *  set 不允许重复值，自动排序
+ *  multiset 允许重复
+ */
+void Day05::stetSet() {
+    // 构造函数
+    std::set<int> s1;
+    std::set<int> s2 = std::set(s1);
+    std::multiset<int> s3;
+    std::multiset<int> s4 = std::multiset(s3);
+    // 插入元素
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(30);
+    s1.insert(40);
+    // 获取迭代器(只读迭代器，不允许修改)
+    const std::set<int>::iterator &iterator = s1.begin();
+    const std::set<int>::iterator &constIterator = s1.end();
+    // 删除元素(排序后的首元素),返回下一个元素的指针
+    const std::set<int>::iterator &treeConstIterator = s1.erase(s1.begin());
+    const std::set<int>::iterator &treeConstIterator1 = s1.erase(s1.begin(),++s1.begin());
+    // 查找10,存在返回指针，不存在返回s1.end();
+    const std::set<int>::iterator &rbTreeConstIterator = s1.find(10);
+    // 查找元素个数
+    unsigned long long int i = s1.count(10);
+    // 第一个元素小于等于指定元素的迭代器，小于等于111的第一个元素
+    const std::set<int>::iterator &bound = s1.lower_bound(111);
+    // 第一个元素大于等于指定元素的迭代器，大于等于111的第一个元素
+    const std::set<int>::iterator &upperBound = s1.upper_bound(111);
+    // 大小
+    unsigned long long int size = s1.size();
+    bool b = s1.empty();
+    // 清空
+    s1.clear();
+}
+```
+### pair
+```C++
+/**
+ * pair
+ * {key:value}
+ */
+void Day05::stetPair() {
+    // 构造函数
+    std::pair<std::string,int> p1;
+    std::pair<std::string,int> p2 =  std::pair("age",99);
+    // 输出key
+    std::string &string = p2.first;
+    // 输出v
+    int v = p2.second;
+    // 第二种创建
+    std::pair<std::string,int> p3 = std::make_pair("aaa",10);
+    std::string &string3 = p3.first;
+    int v3 = p3.second;
+}
+```
+### map
+```C++
+/**
+ * map
+ *  不允许出现重复key
+ *  会按照key排序
+ *  multimap允许重复key
+ *
+ */
+void Day05::stetMap() {
+    // 构造函数
+    std::map<std::string, int> map1;
+    std::map<std::string, int> map2 = std::map(map1);
+    // 插入元素
+    map1.insert(std::pair("ak1", 10));
+    map1.insert(std::make_pair("ak2", 10));
+    map1.insert(std::map<std::string, int>::value_type("ak3", 20));
+    map1.insert({"ak4", 30});
+    map1["ak5"] = 40;
+    // 迭代器遍历
+    for (std::map<std::string, int>::iterator it = map1.begin(); it != map1.end(); it++) {
+        std::cout << (*it).second << std::endl;
+    }
+    // pair遍历
+    for (std::pair<std::string, int> item: map1) {
+        std::cout << item.second << std::endl;
+    }
+    // 删除操作
+    map1.erase(map1.begin());
+    map1.erase(map1.begin(), ++map1.begin());
+    // 按照key删除
+    map1.erase("ak2");
+    // key查找
+    const std::map<std::string, int>::iterator &iterator = map1.find("ak1");
+    // 查找键值对数量
+    unsigned long long int i = map1.count("ak1");
+    // 大小
+    unsigned long long int size = map1.size();
+    bool b = map1.empty();
+    // 清空
+    map1.clear();
+}
+```
+## 算法
+
+## 迭代器
+
+

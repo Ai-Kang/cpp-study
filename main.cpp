@@ -8,6 +8,7 @@ public:
 
 
 int main() {
+	std::string
 	A<int> a();
 	return 0;
 }
