@@ -1641,3 +1641,298 @@ int main() {
 	return 0;
 }
 ```
+# 继承
+```C++
+#include <iostream>
+
+/*
+	父类
+		public：可以在任意的位置访问
+		protected：可以在当前类和子类中访问
+		private：只能在当前类中访问
+*/
+class Animal {
+private:
+	int age;
+	std::string name;
+public:
+	void walk() {
+		std::cout << "Animal walk" << std::endl;
+	}
+	Animal() {
+		std::cout << "Animal 无参构造执行" << std::endl;
+	}
+	Animal(int age, std::string name) : age(age), name(name) {
+		std::cout << "Animal 有参构造执行" << std::endl;
+	}
+};
+
+/*
+	子类:
+		public：保留父类权限
+		protected：public会降为protected
+		private：所有权限都是私有权限，默认是私有继承
+*/
+class Dog : public Animal {
+public:
+	// 子类构造函数需要在父类构造函数执行后执行，需要先执行父类初始化
+	Dog() {
+		std::cout << "Dog 无参构造执行" << std::endl;
+	}
+
+	Dog(int age, std::string name) :Animal(age, name) {
+		std::cout << "Dog 有参构造执行" << std::endl;
+	}
+
+	void walk() {
+		std::cout << "Dog walk" << std::endl;
+	}
+
+};
+
+int main() {
+	// 创建对象
+	Dog* dog = new Dog();
+	dog->walk();
+	Dog* dog1 = new Dog(10, "ll");
+	dog1->Animal::walk();
+	delete dog;
+	delete dog1;
+	return 0;
+}
+```
+## 虚继承
+```C++
+#include <iostream>
+
+class A {
+public:
+	int age;
+};
+// 使用virtual关键字可以设置相同子类只继承父类相同属性的一份
+class A1:public virtual A {
+};
+
+class A2 :public virtual A {};
+
+class aa : public A1, public A2 {
+
+};
+
+int main() {
+
+	return 0;
+}
+```
+## 早绑定
+```c++
+#include <iostream>
+
+class Animal {
+public:
+	int age;
+	std::string name;
+	void week() {
+		std::cout << "Animal week" << std::endl;
+	}
+};
+
+class Dog : public Animal {
+public:
+	void week() {
+		std::cout << "Dog week" << std::endl;
+	}
+};
+
+int main() {
+	// 父类引用指向子类对象
+	Dog dog1;
+	Animal& animal1 = dog1;
+	animal1.week();
+	// or
+	Animal dog2 =  Dog();
+	dog2.week();
+
+	return 0;
+}
+```
+## 晚绑定
+```c++
+#include <iostream>
+
+class Animal {
+public:
+	int age;
+	std::string name;
+	virtual void week() {
+		std::cout << "Animal week" << std::endl;
+	}
+};
+
+class Dog : public Animal {
+public:
+	// 重写
+	void week() override {
+		std::cout << "Dog week" << std::endl;
+	}
+};
+
+int main() {
+	// 父类引用指向子类对象
+	Dog dog1;
+	Animal& animal1 = dog1;
+	animal1.week(); // dog
+	Animal dog2 = Dog();
+	dog2.week(); // Animal
+
+	Animal* dog3 = new Dog();
+	dog3->week(); // Dog
+	delete dog3;
+
+	return 0;
+}
+```
+## 纯虚函数
+```c++
+#include <iostream>
+
+class Animal {
+public:
+	int age;
+	std::string name;
+	// 纯虚函数，子类必须实现
+	virtual void week() = 0;
+};
+
+class Dog : public Animal {
+public:
+	// 重写
+	void week() override {
+		std::cout << "Dog week" << std::endl;
+	}
+};
+
+int main() {
+	// 父类引用指向子类对象
+	Dog dog1;
+	Animal& animal1 = dog1;
+	animal1.week(); // dog
+
+	Animal* dog3 = new Dog();
+	dog3->week(); // Dog
+	delete dog3;
+
+	return 0;
+}
+```
+## 虚析构函数
+```C++
+#include <iostream>
+
+class Animal {
+public:
+	int age;
+	std::string name;
+	// 纯虚函数，子类必须实现
+	virtual void week() = 0;
+	// 虚析构函数
+	virtual ~Animal() {
+	};
+};
+
+class Dog : public Animal {
+public:
+	// 重写
+	void week() override {
+		std::cout << "Dog week" << std::endl;
+	}
+	// 重写虚析构函数
+	~Dog() override {}
+};
+
+int main() {
+	// 父类引用指向子类对象
+	Dog dog1;
+	Animal& animal1 = dog1;
+	animal1.week(); // dog
+
+	Animal* dog3 = new Dog();
+	dog3->week(); // Dog
+	delete dog3;
+
+	return 0;
+}
+```
+# 结构体,和class不同的是默认为public
+```C++
+#include <iostream>
+
+struct Animal {
+public:
+	int age;
+	std::string name;
+	// 纯虚函数，子类必须实现
+	virtual void week() = 0;
+	// 虚析构函数
+	virtual ~Animal() {
+	};
+};
+
+struct Dog : public Animal {
+public:
+	// 重写
+	void week() override {
+		std::cout << "Dog week" << std::endl;
+	}
+	// 重写虚析构函数
+	~Dog() override {}
+};
+
+int main() {
+	// 父类引用指向子类对象
+	Dog dog1;
+	Animal& animal1 = dog1;
+	animal1.week(); // dog
+
+	Animal* dog3 = new Dog();
+	dog3->week(); // Dog
+	delete dog3;
+
+	return 0;
+}
+```
+
+# 模板
+## 函数模板
+```C++
+#include <iostream>
+
+template<typename T>
+T add(T a, T b) {
+	return a + b;
+}
+
+
+int main() {
+	int a = add<int>(10, 20);
+	int b = add(10, 20);
+	return 0;
+}
+```
+
+## 类模板
+```C++
+#include <iostream>
+
+template<typename T>
+class A {
+public:
+	T t1;
+};
+
+
+int main() {
+	A<int> a();
+	return 0;
+}
+```
