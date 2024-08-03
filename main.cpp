@@ -1,33 +1,24 @@
 #include <iostream>
 
-using namespace std;
-
-class Person {
+class Point {
+private:
 public:
-	int age;
-	string name;
-public:
-	explicit Person() {}
-	Person(int age, string name) : age(age), name(name) {
-		cout << "有参构造函数执行" << endl;
+	int x;
+	int y;
+	Point(int x, int y) : x(x), y(y) {}
+	// 类内+重载
+	Point operator+(const Point& p2) {
+		return Point(this->x + p2.x, this->y + p2.y);
 	}
-	// 拷贝构造函数
-	Person(const Person& p) {
-		this->age = p.age;
-		this->name = p.name;
-		cout << "拷贝构造函数" << endl;
-	}
-	// 析构函数，如果是new的对象需要使用delete才会调用析构函数
-	~Person() {
-		cout << this << endl;
-		cout << "对象析构了" << endl;
-	}
-
 };
 
 int main() {
-	// 对象的属性不允许修改,只能调用常函数
-	const	 Person p3 = Person(10, "张三");
-	//p3.age = 20;
+	// 创建对象
+	Point p1 = Point(10, 20);
+	Point p2 = Point(1, 2);
+	Point p3 = p1 + p2;
+	std::cout << p1.x << ";" << p1.y << std::endl;
+	std::cout << p3.x << ";" << p3.y << std::endl;
+
 	return 0;
 }
