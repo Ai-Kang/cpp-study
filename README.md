@@ -2262,3 +2262,147 @@ void studySet() {
 	std::set<int>::iterator find2 = s1.upper_bound(4);
 }
 ```
+### pair
+```C++
+void studyPair() {
+	std::pair<std::string, int> p1("chinese", 99);
+	std::pair<std::string, int> p2 = std::make_pair("aaa", 12);
+	// 获取key
+	std::cout << p1.first << std::endl;
+	// 获取值
+	std::cout << p1.second << std::endl;
+}
+```
+### map
+```C++
+void studMap() {
+	// map会按照key排序
+	std::map<std::string, int> map1;
+	// 插入
+	map1.insert(std::pair<std::string, int>("aikang", 19));
+	map1.insert(std::make_pair("aikang1", 20));
+	map1.insert(std::map<std::string, int>::value_type("aikang2", 22));
+	map1["aikang3"] = 100;
+
+	// 迭代器
+	std::map<std::string, int>::iterator it1 = map1.begin();
+	// 遍历
+#if 0
+	for (std::map<std::string, int>::iterator item = map1.begin(); item != map1.end(); item++) {
+		std::cout << (*item).first << "," << (*item).second << std::endl;
+	}
+#else
+	for (std::pair<std::string, int> item : map1) {
+		std::cout << item.first << "," << item.second << std::endl;
+	}
+#endif
+	// 删除
+	map1.erase(map1.begin());
+	map1.erase("aaa");
+	// 查找
+	std::map<std::string, int>::iterator v1 = map1.find("aaa");
+}
+```
+
+# 算法
+## 函数对象
+```C++
+class StudyCLassFun {
+public:
+	int sum = 0;
+	void operator()() {
+		sum++;
+		std::cout << "调用次数：" << this->sum << std::endl;
+	}
+};
+
+
+int main() {
+	StudyCLassFun s1;
+	s1();
+	s1();
+	return 0;
+}
+```
+## 谓语 使用	lambda实现
+```C++
+using namespace std;
+class Person {
+public:
+	string name;
+	int age;
+	Person(string name, int age) :name(name), age(age) {}
+	int getAge() {
+		return this->age;
+	}
+};
+
+
+
+int main() {
+	// 创建
+	list<Person> ps;
+	ps.push_back(Person("a", 19));
+	ps.push_back(Person("b", 17));
+	ps.push_back(Person("c", 20));
+	ps.push_back(Person("d", 16));
+	// 查找第一个未成年用户
+	list<Person>::iterator p = find_if(ps.begin(), ps.end(), [](Person p) {
+		return p.getAge() < 18;
+		});
+	cout << (*p).name << (*p).age << endl;
+	return 0;
+}
+```
+
+## 系统内常用仿函数
+```C++
+#include <functional>
+
+plsu() // 加法
+minus() // 减法 
+multiplies() // 乘法
+divides() // 除法
+modulus() // 取模
+negate() // 取反
+
+equal_to() // 等于
+not_equal_to() // 不等于
+greater() // 大于
+greater_equal() // 大于等于
+less() // 小于
+less_equal() // 小于等于
+
+logical_and() // 逻辑与
+logical_or() // 逻辑或
+logical_not() // 逻辑非
+```
+# 算法
+## for_each 遍历
+```C++
+using namespace std;
+class Person {
+public:
+	string name;
+	int age;
+	Person() {}
+	Person(string name, int age) :name(name), age(age) {}
+	int getAge() {
+		return this->age;
+	}
+};
+
+
+int main() {
+	list<Person> v1;
+	v1.push_back(Person("a", 19));
+	v1.push_back(Person("b", 17));
+	v1.push_back(Person("c", 20));
+	v1.push_back(Person("d", 16));
+	for_each(v1.begin(), v1.end(), [](Person p) {
+		cout << p.name << p.age << endl;
+		}
+	);
+	return 0;
+}
+```

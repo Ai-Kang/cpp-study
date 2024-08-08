@@ -4,6 +4,8 @@
 #include <queue>
 #include <list>
 #include <set>
+#include <map>
+#include <algorithm>
 
 void studyDeque() {
 	// 创建双端队列
@@ -112,10 +114,81 @@ void studySet() {
 	// 返回第一个元素小于等于指定元素的迭代器
 	std::set<int>::iterator find2 = s1.lower_bound(4);
 	// 返回第一个元素大于指定元素的迭代器
-	std::set<int>::iterator find2 = s1.upper_bound(4);
+	std::set<int>::iterator find3 = s1.upper_bound(4);
 }
 
+void studyPair() {
+	std::pair<std::string, int> p1("chinese", 99);
+	std::pair<std::string, int> p2 = std::make_pair("aaa", 12);
+	// 获取key
+	std::cout << p1.first << std::endl;
+	// 获取值
+	std::cout << p1.second << std::endl;
+}
+
+void studMap() {
+	// map会按照key排序
+	std::map<std::string, int> map1;
+	// 插入
+	map1.insert(std::pair<std::string, int>("aikang", 19));
+	map1.insert(std::make_pair("aikang1", 20));
+	map1.insert(std::map<std::string, int>::value_type("aikang2", 22));
+	map1["aikang3"] = 100;
+
+	// 迭代器
+	std::map<std::string, int>::iterator it1 = map1.begin();
+	// 遍历
+#if 0
+	for (std::map<std::string, int>::iterator item = map1.begin(); item != map1.end(); item++) {
+		std::cout << (*item).first << "," << (*item).second << std::endl;
+	}
+#else
+	for (std::pair<std::string, int> item : map1) {
+		std::cout << item.first << "," << item.second << std::endl;
+	}
+#endif
+	// 删除
+	map1.erase(map1.begin());
+	map1.erase("aaa");
+	// 查找
+	std::map<std::string, int>::iterator v1 = map1.find("aaa");
+}
+
+class StudyCLassFun {
+public:
+	int sum = 0;
+	bool operator()() {
+		sum++;
+		std::cout << "调用次数：" << this->sum << std::endl;
+		if (this->sum <= 10) {
+			return true;
+		}
+		return false;
+	}
+};
+
+using namespace std;
+class Person {
+public:
+	string name;
+	int age;
+	Person() {}
+	Person(string name, int age) :name(name), age(age) {}
+	int getAge() {
+		return this->age;
+	}
+};
+
+
 int main() {
-	studySet();
+	list<Person> v1;
+	v1.push_back(Person("a", 19));
+	v1.push_back(Person("b", 17));
+	v1.push_back(Person("c", 20));
+	v1.push_back(Person("d", 16));
+	for_each(v1.begin(), v1.end(), [](Person p) {
+		cout << p.name << p.age << endl;
+		}
+	);
 	return 0;
 }
