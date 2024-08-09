@@ -6,6 +6,7 @@
 #include <set>
 #include <map>
 #include <algorithm>
+#include <numeric>
 
 void studyDeque() {
 	// 创建双端队列
@@ -179,16 +180,49 @@ public:
 	}
 };
 
-
-int main() {
-	list<Person> v1;
-	v1.push_back(Person("a", 19));
-	v1.push_back(Person("b", 17));
-	v1.push_back(Person("c", 20));
-	v1.push_back(Person("d", 16));
-	for_each(v1.begin(), v1.end(), [](Person p) {
-		cout << p.name << p.age << endl;
+void studyTransform() {
+	vector<int> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+	}
+	vector<int> v2;
+	v2.resize(v1.size());
+	transform(v1.begin(), v1.end(), v2.begin(), [](int i) {
+		return i;
 		}
 	);
+	for (vector<int>::iterator i = v2.begin(); i < v2.end(); i++) {
+		cout << *i << endl;
+	}
+}
+
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(1);
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	// 定义交集
+	vector<int> v3;
+	v3.resize(max(v1.size(), v2.size()));
+	//差集
+	set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+
+
+int main() {
+	studyFind();
 	return 0;
 }

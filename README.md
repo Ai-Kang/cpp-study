@@ -2406,3 +2406,391 @@ int main() {
 	return 0;
 }
 ```
+
+## transform 数据拷贝
+```C++
+int main() {
+	vector<int> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+	}
+	vector<int> v2;
+	v2.resize(v1.size());
+	transform(v1.begin(), v1.end(), v2.begin(), [](int i) {
+		return i;
+		}
+	);
+	for (vector<int>::iterator i = v2.begin(); i < v2.end(); i++) {
+		cout << *i << endl;
+	}
+	return 0;
+}
+```
+## find 查找
+```C++
+void studyFind() {
+	vector<int> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+	}
+	vector<int>::iterator f = find(v1.begin(), v1.end(), 8);
+	if (f == v1.end()) {
+		cout << "找不到结果" << endl;
+	} else {
+		cout << *f << endl;
+	}
+}
+```
+## find_if 查找，返回布尔值
+```C++
+void studyFind() {
+	vector<Person> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(Person("i", i));
+	}
+	vector<Person>::iterator f = find_if(v1.begin(), v1.end(), [](Person& p) {
+		return p.age == 5;
+		}
+	);
+	if (f == v1.end()) {
+		cout << "找不到结果" << endl;
+	} else {
+		cout << (*f).age << (*f).name << endl;
+	}
+}
+```
+## adjacent_find 查找相连的重复元素
+```C++
+void studyFind() {
+	vector<Person> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(Person("i", i));
+	}
+	vector<Person>::iterator f = adjacent_find(v1.begin(), v1.end(), [](Person& p, Person& p1) {
+		return p.age == p1.age;
+		}
+	);
+	if (f == v1.end()) {
+		cout << "找不到结果" << endl;
+	} else {
+		cout << (*f).age << (*f).name << endl;
+	}
+}
+```
+## 二分查找 binary_search,必须是升序排序
+```C++
+void studyFind() {
+	vector<int> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+	}
+
+	cout << binary_search(v1.begin(), v1.end(), 5) << endl;
+}
+```
+## count 统计
+```C++
+void studyFind() {
+	vector<int> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+	}
+	v1.push_back(5);
+	cout << count(v1.begin(), v1.end(), 5) << endl;
+}
+```
+## sort 排序
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(5);
+	v1.push_back(1);
+	v1.push_back(9);
+	v1.push_back(10);
+	v1.push_back(2);
+	v1.push_back(3);
+	v1.push_back(8);
+	sort(v1.begin(), v1.end());
+	for_each(v1.begin(), v1.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+## merge 合并，必须是有序
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	vector<int> v3;
+	v3.resize(v1.size() + v2.size());
+
+	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+## random_shuffle 随机排列
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	vector<int> v3;
+	v3.resize(v1.size() + v2.size());
+
+	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	// 设置随机数种子
+	srand(time(0));
+	// 打乱
+	random_shuffle(v3.begin(), v3.end());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+## reverse 反转
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	vector<int> v3;
+	v3.resize(v1.size() + v2.size());
+
+	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	// 反转
+	reverse(v3.begin(), v3.end());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+
+# 拷贝和替换
+## copy 容器拷贝
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v3;
+	v3.resize(v1.size());
+	copy(v1.begin(), v1.end(), v3.begin());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+## replace 替换
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	replace(v1.begin(), v1.end(), 3,2);
+	for_each(v1.begin(), v1.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+
+## replace_if 满足条件的替换
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(2);
+	v1.push_back(3);
+	v1.push_back(4);
+	v1.push_back(5);
+	replace_if(v1.begin(), v1.end(), [](int i) {
+		return i % 2 == 0;
+		}, 2);
+	for_each(v1.begin(), v1.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+
+## swap 容器交换
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	v2.push_back(12);
+	swap(v1, v2);
+	for_each(v1.begin(), v1.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+
+## accumlate 计算容器累计总和
+#include <numeric>
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	// 1+3+5+7+9+100
+	cout << accumulate(v1.begin(), v1.end(), 100) << endl;
+
+}
+```
+## fill 向容器添加元素
+#include <numeric>
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	// 元素替换
+	fill(v1.begin(), v1.end(), 100);
+	for_each(v1.begin(), v1.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+
+# 两个容器求-交集、并集、差集
+## set_intersection 交集
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(1);
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	// 定义交集
+	vector<int> v3;
+	v3.resize(v1.size());
+	//获取交集,必须升序排列
+	set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+## set_union 并集
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(1);
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	// 定义交集
+	vector<int> v3;
+	v3.resize(v1.size() + v2.size());
+	//并集
+	set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
+## set_difference 差集
+```C++
+void studyFind() {
+	vector<int> v1;
+	v1.push_back(1);
+	v1.push_back(3);
+	v1.push_back(5);
+	v1.push_back(7);
+	v1.push_back(9);
+	vector<int> v2;
+	v2.push_back(1);
+	v2.push_back(2);
+	v2.push_back(4);
+	v2.push_back(6);
+	v2.push_back(8);
+	v2.push_back(10);
+	// 定义交集
+	vector<int> v3;
+	v3.resize(max(v1.size(), v2.size()));
+	//差集
+	set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+	for_each(v3.begin(), v3.end(), [](int i) {
+		cout << i << endl;
+		}
+	);
+}
+```
