@@ -29,6 +29,9 @@
     <ClCompile Include="licode2.cpp">
       <Filter>源文件\src</Filter>
     </ClCompile>
+    <ClCompile Include="licode3.cpp">
+      <Filter>源文件\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
